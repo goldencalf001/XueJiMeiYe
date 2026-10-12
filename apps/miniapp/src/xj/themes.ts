@@ -11,14 +11,16 @@ export interface XjTheme {
   desc: string
   swatch: [string, string]
   hex: string
+  /** 主题主视觉插画（压缩版，源图在 apps/miniapp/design/theme-artwork/） */
+  img: string
 }
 
 export const THEMES: XjTheme[] = [
-  { key: 'sun', label: '暖阳', desc: '元气柠檬黄', swatch: ['#ffe14d', '#ffd100'], hex: '#F5BE00' },
-  { key: 'sakura', label: '樱粉', desc: '软萌樱花粉', swatch: ['#ffd3de', '#ffb3c6'], hex: '#F79BB2' },
-  { key: 'mizu', label: '雾蓝', desc: '温柔天空蓝', swatch: ['#bcd7ef', '#8fb8e0'], hex: '#7AA5D1' },
-  { key: 'matcha', label: '抹茶', desc: '清新鼠尾草', swatch: ['#cde3c0', '#aecfa0'], hex: '#97BA88' },
-  { key: 'cream', label: '奶油', desc: '甜糯蜂蜜黄', swatch: ['#f7e3bb', '#eec787'], hex: '#E2B367' },
+  { key: 'sun', label: '暖阳', desc: '元气柠檬黄', swatch: ['#ffe14d', '#ffd100'], hex: '#F5BE00', img: '/static/images/themes/sun.jpg' },
+  { key: 'sakura', label: '樱粉', desc: '软萌樱花粉', swatch: ['#ffd3de', '#ffb3c6'], hex: '#F79BB2', img: '/static/images/themes/sakura.jpg' },
+  { key: 'mizu', label: '雾蓝', desc: '温柔天空蓝', swatch: ['#bcd7ef', '#8fb8e0'], hex: '#7AA5D1', img: '/static/images/themes/mizu.jpg' },
+  { key: 'matcha', label: '抹茶', desc: '清新鼠尾草', swatch: ['#cde3c0', '#aecfa0'], hex: '#97BA88', img: '/static/images/themes/matcha.jpg' },
+  { key: 'cream', label: '奶油', desc: '甜糯蜂蜜黄', swatch: ['#f7e3bb', '#eec787'], hex: '#E2B367', img: '/static/images/themes/cream.jpg' },
 ]
 
 export const DEFAULT_THEME = 'sun'
