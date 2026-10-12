@@ -74,7 +74,7 @@ async function submit() {
             <view class="row gap6"><text class="t-md">向{{ hospitalName }}提供预约信息</text><text class="t-xs c-brand semi">必需</text></view>
             <text class="t-sm c2">称呼、性别、年龄、手机号、推荐的检查项目、相关测评要点</text>
           </view>
-          <switch :checked="c3" color="#F5BE00" @change="(e) => (c3 = e.detail.value)" />
+          <switch :checked="c3" :color="xj.themeHex" @change="(e) => (c3 = e.detail.value)" />
         </view>
         <view class="divider" />
         <view class="row gap12">
@@ -82,7 +82,7 @@ async function submit() {
             <view class="row gap6"><text class="t-md">允许医院把结果回传给顾问</text><text class="t-xs c2">可选</text></view>
             <text class="t-sm c2">让顾问按医生意见调整您的门店方案；不影响就诊</text>
           </view>
-          <switch :checked="c4" color="#F5BE00" @change="(e) => (c4 = e.detail.value)" />
+          <switch :checked="c4" :color="xj.themeHex" @change="(e) => (c4 = e.detail.value)" />
         </view>
         <view class="divider" />
         <view class="row gap12" @click="transport = !transport">

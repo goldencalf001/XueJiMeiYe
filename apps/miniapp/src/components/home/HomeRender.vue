@@ -117,7 +117,7 @@ const featuredFirst = (items: any[], featured?: string) => {
       </view>
 
       <!-- 轮播（乐龄模式停用自动轮播） -->
-      <swiper v-else-if="c.type === 'banner'" class="banner" :autoplay="c.props.autoplay" circular :indicator-dots="c.props.items.length > 1" indicator-color="rgba(34, 24, 40, 0.14)" indicator-active-color="#f5be00">
+      <swiper v-else-if="c.type === 'banner'" class="banner" :autoplay="c.props.autoplay" circular :indicator-dots="c.props.items.length > 1" indicator-color="rgba(34, 24, 40, 0.14)" :indicator-active-color="xj.themeHex">
         <swiper-item v-for="it in c.props.items" :key="it.code">
           <view class="card row gap12 banner-card" @click="open(it, 'banner')">
             <view class="photo-slot" style="width: 84px; height: 84px"><XIcon :name="it.icon" :size="24" /><text>实拍位</text></view>
