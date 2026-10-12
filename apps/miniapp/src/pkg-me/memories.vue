@@ -39,7 +39,7 @@ async function del(m: any) {
           <text class="flex1 t-body">{{ m.text }}</text>
           <view @click="del(m)"><XIcon name="trash" :size="20" color="#786E74" /></view>
         </view>
-        <view v-if="!list.length" class="empty">小镜还没有记住什么</view>
+        <xj-empty v-if="!list.length" text="小镜还没有记住什么" />
       </view>
     </view>
   </view>

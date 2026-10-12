@@ -18,7 +18,7 @@ onShow(async () => { list.value = await http.get('/app/messages') })
         <view class="row-between"><text class="t-md">{{ m.title }}</text><text class="t-xs c3">{{ m.at }}</text></view>
         <text class="t-sm c2">{{ m.content }}</text>
       </view>
-      <view v-if="!list.length" class="empty">暂无消息</view>
+      <xj-empty v-if="!list.length" text="暂无消息" />
     </view>
   </view>
 </template>

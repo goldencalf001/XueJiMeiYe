@@ -43,7 +43,7 @@ function open(r: any) {
           <text v-if="r.summary" class="t-sm c2">{{ r.summary }}</text>
         </view>
       </view>
-      <view v-if="!list.length" class="empty">暂无记录</view>
+      <xj-empty v-if="!list.length" text="暂无记录" />
     </view>
   </view>
 </template>

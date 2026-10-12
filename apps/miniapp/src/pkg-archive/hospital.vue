@@ -25,7 +25,7 @@ onLoad(async () => {
           <view class="col flex1"><text class="t-md">{{ r.title }}</text><text class="t-sm c2">{{ r.date }}</text></view>
           <XIcon name="chevron-right" :size="18" color="#786E74" />
         </view>
-        <view v-if="!list.length" class="empty">医院回传后，报告会出现在这里</view>
+        <xj-empty v-if="!list.length" text="医院回传后，报告会出现在这里" />
       </view>
       <text class="section-title">我的转介与预约</text>
       <view class="group">
@@ -36,7 +36,7 @@ onLoad(async () => {
           </view>
           <text class="tag care">{{ r.statusName }}</text>
         </view>
-        <view v-if="!refs.length" class="empty">暂无转介记录</view>
+        <xj-empty v-if="!refs.length" text="暂无转介记录" />
       </view>
     </view>
   </view>
