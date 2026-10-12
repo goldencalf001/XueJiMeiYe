@@ -42,9 +42,74 @@ page {
   --gold: #d2b47a;
   --night: #131013;
   --night-2: #1e191d;
+  --brand-grad: linear-gradient(120deg, #ffe14d 0%, #ffd100 55%, #ffc300 100%);
   background: #f5f5f5;
   color: #222222;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* ───── 治愈系主题（色板取自 moe-ui 风格库：轻盈水彩 / 清新蜡笔 / 奶油彩铅）─────
+ * 主题 class 独立于 .xj，页面容器与 tabbar 根节点都会挂载，保证 CSS 变量可达。
+ * --on-brand 为品牌底上的深色文字，各主题对比度均 ≥ 4.5:1（含乐龄模式）。
+ * 语义色（--alert/--price/--hint/--star）跨主题不变，保证医疗警示与价格语义稳定。 */
+.theme-sakura {
+  --brand: #ffb3c6;
+  --brand-dark: #f79bb2;
+  --brand-soft: #fff1f5;
+  --brand-line: #f6c6d4;
+  --brand-ink: #94365a;
+  --on-brand: #57172f;
+  --care: #6b9bc4;
+  --care-dark: #527fa9;
+  --care-soft: #e9f1f9;
+  --care-line: #c6dbed;
+  --bg: #fdf2f5;
+  --brand-grad: linear-gradient(120deg, #ffd3de 0%, #ffb3c6 55%, #f79bb2 100%);
+}
+
+.theme-mizu {
+  --brand: #8fb8e0;
+  --brand-dark: #7aa5d1;
+  --brand-soft: #eef5fb;
+  --brand-line: #c9dcf0;
+  --brand-ink: #2c5a8a;
+  --on-brand: #17304d;
+  --care: #4f8f81;
+  --care-dark: #3d7468;
+  --care-soft: #e7f3f0;
+  --care-line: #c2e0d9;
+  --bg: #f1f6fa;
+  --brand-grad: linear-gradient(120deg, #bcd7ef 0%, #8fb8e0 55%, #7aa5d1 100%);
+}
+
+.theme-matcha {
+  --brand: #aecfa0;
+  --brand-dark: #97ba88;
+  --brand-soft: #f1f7ec;
+  --brand-line: #d3e4c7;
+  --brand-ink: #47603b;
+  --on-brand: #2a4220;
+  --care: #3f7d6e;
+  --care-dark: #316257;
+  --care-soft: #e6f2ef;
+  --care-line: #bfe0d9;
+  --bg: #f4f8ee;
+  --brand-grad: linear-gradient(120deg, #cde3c0 0%, #aecfa0 55%, #97ba88 100%);
+}
+
+.theme-cream {
+  --brand: #eec787;
+  --brand-dark: #e2b367;
+  --brand-soft: #faf3e3;
+  --brand-line: #eed9ac;
+  --brand-ink: #77551a;
+  --on-brand: #4a350f;
+  --care: #7d8a4e;
+  --care-dark: #66713e;
+  --care-soft: #f0f2e1;
+  --care-line: #d9dec0;
+  --bg: #fbf7ec;
+  --brand-grad: linear-gradient(120deg, #f7e3bb 0%, #eec787 55%, #e2b367 100%);
 }
 
 .xj {
