@@ -93,3 +93,51 @@ html[data-theme="auroraGreen"] {
   --pure-theme-menu-title-hover: #fff;
   --pure-theme-menu-active-before: #60ac80;
 }
+
+/* 樱花粉（治愈系） */
+html[data-theme="sakura"] {
+  --pure-theme-sub-menu-active-text: #fff;
+  --pure-theme-menu-bg: #26101c;
+  --pure-theme-menu-hover: rgb(227 114 149 / 15%);
+  --pure-theme-sub-menu-bg: #000;
+  --pure-theme-menu-text: #b58ca0;
+  --pure-theme-sidebar-logo: #3a1526;
+  --pure-theme-menu-title-hover: #fff;
+  --pure-theme-menu-active-before: #e37295;
+}
+
+/* 雾蓝（治愈系） */
+html[data-theme="mizu"] {
+  --pure-theme-sub-menu-active-text: #fff;
+  --pure-theme-menu-bg: #0e1a26;
+  --pure-theme-menu-hover: rgb(94 143 184 / 15%);
+  --pure-theme-sub-menu-bg: #000;
+  --pure-theme-menu-text: #8ba3bd;
+  --pure-theme-sidebar-logo: #14283a;
+  --pure-theme-menu-title-hover: #fff;
+  --pure-theme-menu-active-before: #5e8fb8;
+}
+
+/* 抹茶绿（治愈系） */
+html[data-theme="matcha"] {
+  --pure-theme-sub-menu-active-text: #fff;
+  --pure-theme-menu-bg: #141d13;
+  --pure-theme-menu-hover: rgb(125 155 106 / 15%);
+  --pure-theme-sub-menu-bg: #000;
+  --pure-theme-menu-text: #9db08d;
+  --pure-theme-sidebar-logo: #1c291a;
+  --pure-theme-menu-title-hover: #fff;
+  --pure-theme-menu-active-before: #7d9b6a;
+}
+
+/* 奶油金（治愈系） */
+html[data-theme="cream"] {
+  --pure-theme-sub-menu-active-text: #fff;
+  --pure-theme-menu-bg: #231a0d;
+  --pure-theme-menu-hover: rgb(201 163 92 / 15%);
+  --pure-theme-sub-menu-bg: #000;
+  --pure-theme-menu-text: #bda87f;
+  --pure-theme-sidebar-logo: #33260f;
+  --pure-theme-menu-title-hover: #fff;
+  --pure-theme-menu-active-before: #c9a35c;
+}

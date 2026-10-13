@@ -14,6 +14,9 @@ import { HomeService, moduleCard, moduleVisible, TIER_BENEFITS } from '../servic
 import { MirrorService } from '../services/mirror.service'
 import { WorkflowService } from '../services/workflow.service'
 
+/** 小程序端可选主题（治愈系多主题，与 miniapp src/xj/themes.ts 保持一致） */
+const ALLOWED_THEMES = ['sun', 'sakura', 'mizu', 'matcha', 'cream']
+
 const BENEFIT_TABLE = [
   { name: '专属顾问直连（优先响应）', A: '4 小时内响应', B: '—', C: '—' },
   { name: '海外 VIP 通道', A: '✓', B: '—', C: '—' },
@@ -112,7 +115,7 @@ export class AppController {
     const coupons = await this.prisma.coupon.count({ where: { customerId: c.id, status: { in: ['issued', 'claimed', 'booked'] } } })
     return {
       id: c.id, customerNo: c.customerNo, salutation: c.salutation, gender: c.gender, birthYear: c.birthYear, age: c.birthYear ? ageOf(c.birthYear) : null,
-      tier: c.tier, tierName: TIER_NAMES[c.tier], elderMode: c.elderMode, lang: c.lang, personalization: c.personalization, autoRead: c.autoRead,
+      tier: c.tier, tierName: TIER_NAMES[c.tier], elderMode: c.elderMode, lang: c.lang, personalization: c.personalization, autoRead: c.autoRead, theme: c.theme,
       phone: maskPhone(c.phone), store: store ? { id: store.id, name: store.name, phone: store.phone, address: store.address } : null,
       advisor: advisor ? { id: advisor.id, name: advisor.name, phone: advisor.phone } : null,
       points: await this.wf.balance(c.id), unreadMessages: unread, familyCount: family, familyPending: pending, coupons,
@@ -140,9 +143,13 @@ export class AppController {
 
   @Patch('me/settings')
   @Aud('app')
-  async settings(@CurrentUser() u: CustomerUser, @Body() body: { elderMode?: boolean, lang?: string, personalization?: boolean, autoRead?: boolean }) {
+  async settings(@CurrentUser() u: CustomerUser, @Body() body: { elderMode?: boolean, lang?: string, personalization?: boolean, autoRead?: boolean, theme?: string }) {
     const data: any = {}
     for (const k of ['elderMode', 'lang', 'personalization', 'autoRead'] as const) if (body[k] !== undefined) data[k] = body[k]
+    if (body.theme !== undefined) {
+      if (!ALLOWED_THEMES.includes(body.theme)) throw Err.bad('不支持的主题')
+      data.theme = body.theme
+    }
     await this.prisma.customer.update({ where: { id: u.id }, data })
     if (body.elderMode !== undefined) await this.wf.event(u.id, 'elder_mode_toggle', { on: body.elderMode })
     if (body.personalization !== undefined) {

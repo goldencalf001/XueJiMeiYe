@@ -185,7 +185,7 @@ function voice() {
         </view>
         <view class="row gap16" style="width: 100%">
           <view class="step" @click="sliderVal = Math.max(q.config.min, sliderVal - 1)"><XIcon name="minus" :size="24" /></view>
-          <slider class="flex1" :min="q.config.min" :max="q.config.max" :step="q.config.step || 1" :value="sliderVal" active-color="#F5BE00" block-size="28" @changing="(e) => (sliderVal = e.detail.value)" @change="(e) => (sliderVal = e.detail.value)" />
+          <slider class="flex1" :min="q.config.min" :max="q.config.max" :step="q.config.step || 1" :value="sliderVal" :active-color="xj.themeHex" block-size="28" @changing="(e) => (sliderVal = e.detail.value)" @change="(e) => (sliderVal = e.detail.value)" />
           <view class="step" @click="sliderVal = Math.min(q.config.max, sliderVal + 1)"><XIcon name="plus" :size="24" /></view>
         </view>
       </view>

@@ -31,7 +31,7 @@ onLoad(() => {
 </script>
 
 <template>
-  <view v-if="customTabbarEnable" class="tabbar-holder" :class="{ elder }">
+  <view v-if="customTabbarEnable" class="tabbar-holder" :class="[`theme-${xj.theme}`, { elder }]">
     <view class="tabbar" :class="{ elder }" @touchmove.stop.prevent>
       <view class="items">
         <view v-for="(item, index) in tabbarList" :key="index" class="item" :class="{ on: tabbarStore.curIdx === index }" @click="handleClick(index)">
@@ -57,6 +57,6 @@ onLoad(() => {
 .tabbar.elder .item .label { font-size: 14px; }
 .item.on { color: #222222; }
 .item.on .label { font-weight: 700; }
-.item.on::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; border-radius: 2px; background: #ffd100; }
+.item.on::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; border-radius: 2px; background: var(--brand); }
 .safe { padding-bottom: env(safe-area-inset-bottom); }
 </style>

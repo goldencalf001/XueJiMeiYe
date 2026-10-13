@@ -104,8 +104,9 @@ model Customer {
   tierLockedUntil DateTime?
   elderMode       Boolean   @default(false)
   lang            String    @default("zh")
-  personalization Boolean   @default(true)
+  personalization Boolean    @default(true)
   autoRead        Boolean   @default(true)
+  theme           String    @default("sun")
   source          String    @default("store_qr")
   referrerId      Int?
   status          String    @default("active")

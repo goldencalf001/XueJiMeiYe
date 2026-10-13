@@ -17,7 +17,8 @@ const KNOWN = ['greeting', 'tierCard', 'healthCard', 'entryGrid', 'banner', 'mod
 const list = computed(() => (props.components || []).filter(c => KNOWN.includes(c.type)))
 
 function open(item: any, component: string) {
-  if (item?.code) http.post('/app/events', { event: 'home_component_click', props: { component, moduleCode: item.code } }, { silent: true }).catch(() => {})
+  if (item?.code)
+    http.post('/app/events', { event: 'home_component_click', props: { component, moduleCode: item.code } }, { silent: true }).catch(() => {})
   if (!xj.loggedIn && item?.link && !item.link.startsWith('/pkg-module/detail') && !item.link.startsWith('/pages/')) {
     go('/pkg-auth/login')
     return
@@ -25,8 +26,9 @@ function open(item: any, component: string) {
   go(item.link)
 }
 
-const featuredFirst = (items: any[], featured?: string) => {
-  if (!featured) return { feature: null, rest: items }
+function featuredFirst(items: any[], featured?: string) {
+  if (!featured)
+    return { feature: null, rest: items }
   const f = items.find(i => i.code === featured)
   return { feature: f || null, rest: items.filter(i => i.code !== featured) }
 }
@@ -35,18 +37,23 @@ const featuredFirst = (items: any[], featured?: string) => {
 <template>
   <view class="home-render stack">
     <template v-for="(c, i) in list" :key="i">
-      <!-- 问候栏 -->
-      <view v-if="c.type === 'greeting'" class="greet row-between">
-        <view class="col gap6 flex1">
-          <text class="t-hero">{{ c.props.text }}</text>
-          <view class="row gap8">
-            <text class="tag" :class="{ gold: c.props.tier === 'A' }">{{ c.props.isGuest ? '访客' : c.props.tierName }}</text>
-            <text v-if="c.props.isGuest" class="t-sm c-brand semi" @click="go('/pkg-auth/login')">登录 / 注册</text>
+      <!-- 问候栏：主题插画头图，随主题切换 -->
+      <view v-if="c.type === 'greeting'" class="greet-hero">
+        <image class="greet-hero__img" :src="xj.themeMeta.img" mode="aspectFill" />
+        <view class="greet-hero__body row-between">
+          <view class="col flex1 gap6">
+            <text class="t-hero">{{ c.props.text }}</text>
+            <view class="row gap8">
+              <text class="tag" :class="{ gold: c.props.tier === 'A' }">{{ c.props.isGuest ? '访客' : c.props.tierName }}</text>
+              <text v-if="c.props.isGuest" class="t-sm semi c-brand" @click="go('/pkg-auth/login')">登录 / 注册</text>
+            </view>
           </view>
-        </view>
-        <view v-if="c.props.showElderToggle" class="col gap4" style="align-items: flex-end" @click="xj.toggleElder()">
-          <text class="t-sm c2">乐龄模式</text>
-          <view class="toggle" :class="{ on: elder }"><view class="knob" /></view>
+          <view v-if="c.props.showElderToggle" class="col gap4" style="align-items: flex-end" @click="xj.toggleElder()">
+            <text class="t-sm c2">乐龄模式</text>
+            <view class="toggle" :class="{ on: elder }">
+              <view class="knob" />
+            </view>
+          </view>
         </view>
       </view>
 
@@ -54,7 +61,9 @@ const featuredFirst = (items: any[], featured?: string) => {
       <view v-else-if="c.type === 'tierCard'" class="tier-card" :class="`tier-${c.props.tier}`" @click="go('/pkg-me/tier')">
         <view class="row-between">
           <text class="t-lg">{{ c.props.tierName }}</text>
-          <view class="row gap4 t-sm"><text>全部权益</text><XIcon name="chevron-right" :size="16" /></view>
+          <view class="row t-sm gap4">
+            <text>全部权益</text><XIcon name="chevron-right" :size="16" />
+          </view>
         </view>
         <view class="tier-line" />
         <view class="row wrap gap8">
@@ -81,10 +90,14 @@ const featuredFirst = (items: any[], featured?: string) => {
         <view v-else class="col gap12" @click="go(xj.loggedIn ? '/pkg-assess/intro' : '/pkg-auth/login')">
           <text class="t-lg">了解自己的六个维度</text>
           <text class="c2">肌肤、体型、轮廓、体能、体态、心灵。完成测评可以领取免费体检券。</text>
-          <view class="btn">{{ c.props.cta || '开始六维测评，约 8 分钟' }}</view>
+          <view class="btn">
+            {{ c.props.cta || '开始六维测评，约 8 分钟' }}
+          </view>
         </view>
         <view v-for="t in c.props.todos" :key="t.text" class="todo row gap12" @click="go(t.link)">
-          <view class="icon-box" :class="t.tone === 'care' ? 'care' : ''"><XIcon :name="t.icon" /></view>
+          <view class="icon-box" :class="t.tone === 'care' ? 'care' : ''">
+            <XIcon :name="t.icon" />
+          </view>
           <view class="col flex1">
             <text class="t-md">{{ t.text }}</text>
             <text v-if="t.sub" class="t-sm c2">{{ t.sub }}</text>
@@ -110,21 +123,25 @@ const featuredFirst = (items: any[], featured?: string) => {
         </view>
         <view v-else class="grid4 card">
           <view v-for="it in c.props.items" :key="it.code" class="g4 col gap6" @click="open(it, 'entryGrid')">
-            <view class="icon-box" :class="it.code === 'checkup_coupon' ? 'care' : ''"><XIcon :name="it.icon" :size="24" /></view>
+            <view class="icon-box" :class="it.code === 'checkup_coupon' ? 'care' : ''">
+              <XIcon :name="it.icon" :size="24" />
+            </view>
             <text class="t-sm">{{ it.name }}</text>
           </view>
         </view>
       </view>
 
       <!-- 轮播（乐龄模式停用自动轮播） -->
-      <swiper v-else-if="c.type === 'banner'" class="banner" :autoplay="c.props.autoplay" circular :indicator-dots="c.props.items.length > 1" indicator-color="rgba(34, 24, 40, 0.14)" indicator-active-color="#f5be00">
+      <swiper v-else-if="c.type === 'banner'" class="banner" :autoplay="c.props.autoplay" circular :indicator-dots="c.props.items.length > 1" indicator-color="rgba(34, 24, 40, 0.14)" :indicator-active-color="xj.themeHex">
         <swiper-item v-for="it in c.props.items" :key="it.code">
-          <view class="card row gap12 banner-card" @click="open(it, 'banner')">
-            <view class="photo-slot" style="width: 84px; height: 84px"><XIcon :name="it.icon" :size="24" /><text>实拍位</text></view>
-            <view class="col gap4 flex1">
-              <text class="t-xs c-care semi">{{ it.name }}</text>
+          <view class="card row banner-card gap12" @click="open(it, 'banner')">
+            <view class="photo-slot" style="width: 84px; height: 84px">
+              <XIcon :name="it.icon" :size="24" /><text>实拍位</text>
+            </view>
+            <view class="col flex1 gap4">
+              <text class="t-xs semi c-care">{{ it.name }}</text>
               <text class="t-lg">{{ it.summary }}</text>
-              <text class="t-sm c-brand semi">{{ it.priceText || '查看详情' }}</text>
+              <text class="t-sm semi c-brand">{{ it.priceText || '查看详情' }}</text>
             </view>
           </view>
         </swiper-item>
@@ -139,21 +156,23 @@ const featuredFirst = (items: any[], featured?: string) => {
       <view v-else-if="c.type === 'moduleList'" class="stack">
         <text v-if="c.props.title" class="t-lg">{{ c.props.title }}</text>
         <template v-if="c.props.style === 'card'">
-          <view v-for="it in c.props.items" :key="it.code" class="card row gap12 mcard" @click="open(it, 'moduleList')">
+          <view v-for="it in c.props.items" :key="it.code" class="card row mcard gap12" @click="open(it, 'moduleList')">
             <view class="photo-slot" :style="{ width: elder ? '92px' : '84px', height: elder ? '92px' : '84px' }">
               <XIcon :name="it.icon" :size="22" />
               <text>实拍位</text>
             </view>
-            <view class="col gap4 flex1">
+            <view class="col flex1 gap4">
               <text class="t-lg" style="line-height: 1.35">{{ it.name }}</text>
               <text class="t-sm c2">{{ it.days || it.summary }}</text>
-              <text v-if="it.priceText" class="t-md c-brand bold">{{ it.priceText }}</text>
+              <text v-if="it.priceText" class="t-md bold c-brand">{{ it.priceText }}</text>
             </view>
           </view>
         </template>
         <view v-else class="group">
           <view v-for="it in c.props.items" :key="it.code" class="cell" @click="open(it, 'moduleList')">
-            <view class="icon-box"><XIcon :name="it.icon" /></view>
+            <view class="icon-box">
+              <XIcon :name="it.icon" />
+            </view>
             <view class="col flex1">
               <text class="t-md">{{ it.name }}</text>
               <text class="t-sm c2">{{ it.summary }}</text>
@@ -165,8 +184,12 @@ const featuredFirst = (items: any[], featured?: string) => {
 
       <!-- 活动卡 -->
       <view v-else-if="c.type === 'activityCard'" class="card row gap12" @click="open(c.props, 'activityCard')">
-        <view class="icon-box care"><XIcon name="calendar-event" /></view>
-        <view class="col flex1"><text class="t-md">{{ c.props.name }}</text><text class="t-sm c2">{{ c.props.summary }}</text></view>
+        <view class="icon-box care">
+          <XIcon name="calendar-event" />
+        </view>
+        <view class="col flex1">
+          <text class="t-md">{{ c.props.name }}</text><text class="t-sm c2">{{ c.props.summary }}</text>
+        </view>
       </view>
 
       <!-- 公告条 -->
@@ -184,39 +207,190 @@ const featuredFirst = (items: any[], featured?: string) => {
 </template>
 
 <style scoped lang="scss">
-.greet { padding-top: 4px; }
-.toggle { width: 50px; height: 30px; border-radius: 15px; background: #d8d0d4; position: relative; transition: background 0.2s; }
-.toggle .knob { position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(60, 24, 44, 0.25); transition: left 0.2s; }
-.toggle.on { background: var(--brand); }
-.toggle.on .knob { left: 23px; }
-.night .toggle.on { background: var(--gold); }
+/* 主题插画头图：文字叠在插画左侧天空留白区，夜晚模式回退深色底 */
+.greet-hero {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 112px;
+  box-shadow: 0 10px 22px -14px rgba(34, 24, 40, 0.32);
+}
+.greet-hero__img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.greet-hero__body {
+  position: relative;
+  min-height: 112px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.night .greet-hero {
+  background: var(--surface);
+}
+.night .greet-hero__img {
+  display: none;
+}
+.toggle {
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+  background: #d8d0d4;
+  position: relative;
+  transition: background 0.2s;
+}
+.toggle .knob {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 24, 44, 0.25);
+  transition: left 0.2s;
+}
+.toggle.on {
+  background: var(--brand);
+}
+.toggle.on .knob {
+  left: 23px;
+}
+.night .toggle.on {
+  background: var(--gold);
+}
 
-.tier-card { border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 24px -16px rgba(34, 24, 40, 0.35); }
-.tier-C { background: var(--brand-soft); color: var(--brand-ink); }
-.tier-B { background: var(--brand); color: var(--on-brand); }
-.tier-A { background: #1e191d; color: #f2ece8; border: 1px solid rgba(210, 180, 122, 0.3); }
-.tier-A .t-lg { color: #d2b47a; }
-.tier-line { height: 1px; background: currentColor; opacity: 0.2; }
-.benefit { padding: 2px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.28); }
-.tier-C .benefit { background: #fff; }
+.tier-card {
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 24px -16px rgba(34, 24, 40, 0.35);
+}
+.tier-C {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+}
+.tier-B {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+.tier-A {
+  background: #1e191d;
+  color: #f2ece8;
+  border: 1px solid rgba(210, 180, 122, 0.3);
+}
+.tier-A .t-lg {
+  color: #d2b47a;
+}
+.tier-line {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+.benefit {
+  padding: 2px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.28);
+}
+.tier-C .benefit {
+  background: #fff;
+}
 
-.health { padding-bottom: 4px; }
-.todo { border-top: 1px solid var(--line); padding: 14px 0 12px; margin-top: 12px; }
+.health {
+  padding-bottom: 4px;
+}
+.todo {
+  border-top: 1px solid var(--line);
+  padding: 14px 0 12px;
+  margin-top: 12px;
+}
 
-.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.tile { height: 100px; border-radius: 20px; background: var(--surface); padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 8px 18px -14px rgba(34, 24, 40, 0.28); }
-.elder .tile { height: 108px; }
-.tile-name { font-size: var(--fs-md); font-weight: 600; line-height: 1.3; }
-.tile.featured { grid-column: span 2; background: var(--brand); color: var(--on-brand); height: 112px; box-shadow: 0 10px 22px -12px rgba(204, 150, 0, 0.55); }
-.night .tile.featured { color: #131013; }
-.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 4px; }
-.g4 { align-items: center; text-align: center; }
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.tile {
+  height: 100px;
+  border-radius: 20px;
+  background: var(--surface);
+  padding: 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 8px 18px -14px rgba(34, 24, 40, 0.28);
+}
+.elder .tile {
+  height: 108px;
+}
+.tile-name {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.tile.featured {
+  grid-column: span 2;
+  background: var(--brand);
+  color: var(--on-brand);
+  height: 112px;
+  box-shadow: 0 10px 22px -12px rgba(204, 150, 0, 0.55);
+}
+.night .tile.featured {
+  color: #131013;
+}
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px 4px;
+}
+.g4 {
+  align-items: center;
+  text-align: center;
+}
 
-.banner { height: 120px; }
-.banner-card { height: 116px; }
-.mcard { padding: 12px; }
+.banner {
+  height: 120px;
+}
+.banner-card {
+  height: 116px;
+}
+.mcard {
+  padding: 12px;
+}
 
-.fab { position: fixed; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 60; height: 48px; padding: 0 16px; border-radius: 24px; background: var(--brand); color: var(--on-brand); display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; box-shadow: 0 8px 24px -8px rgba(204, 150, 0, 0.55); }
-.fab.elder { height: 58px; padding: 0 20px; font-size: 18px; bottom: calc(88px + env(safe-area-inset-bottom)); }
-.fab.night { color: #131013; }
+.fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  z-index: 60;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 24px;
+  background: var(--brand);
+  color: var(--on-brand);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 8px 24px -8px rgba(204, 150, 0, 0.55);
+}
+.fab.elder {
+  height: 58px;
+  padding: 0 20px;
+  font-size: 18px;
+  bottom: calc(88px + env(safe-area-inset-bottom));
+}
+.fab.night {
+  color: #131013;
+}
 </style>

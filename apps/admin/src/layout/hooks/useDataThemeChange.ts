@@ -28,7 +28,15 @@ export function useDataThemeChange() {
     /* 绿宝石 */
     { color: "#13c2c2", themeColor: "mingQing" },
     /* 酸橙绿 */
-    { color: "#52c41a", themeColor: "auroraGreen" }
+    { color: "#52c41a", themeColor: "auroraGreen" },
+    /* 樱花粉（治愈系，对应小程序「樱粉」主题） */
+    { color: "#e37295", themeColor: "sakura" },
+    /* 雾蓝（治愈系，对应小程序「雾蓝」主题） */
+    { color: "#5e8fb8", themeColor: "mizu" },
+    /* 抹茶绿（治愈系，对应小程序「抹茶」主题） */
+    { color: "#7d9b6a", themeColor: "matcha" },
+    /* 奶油金（治愈系，对应小程序「奶油」主题） */
+    { color: "#c9a35c", themeColor: "cream" }
   ]);
 
   const { $storage } = useGlobal<GlobalPropertiesApi>();

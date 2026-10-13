@@ -41,7 +41,7 @@ onLoad(async (q: any) => {
         <view v-for="(s, k) in SOURCE_STYLE" :key="k" class="row gap4"><view class="lgd" :style="{ borderColor: s.fg }" /><text>{{ s.name }}</text></view>
         <view v-if="t.refLow !== null && t.refHigh !== null && t.refLow !== undefined" class="row gap4"><view class="lgd ref" /><text>参考范围</text></view>
       </view>
-      <view v-if="!t.points.length" class="empty">这段时间还没有数据</view>
+      <xj-empty v-if="!t.points.length" text="这段时间还没有数据" />
       <view class="group" style="padding: 0">
         <view v-for="p in [...t.points].reverse()" :key="p.date + p.value" class="cell">
           <text class="flex1 t-body num">{{ p.date }}</text>

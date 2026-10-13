@@ -28,7 +28,8 @@ const menus = [
 ]
 
 onShow(() => {
-  if (xj.loggedIn) xj.loadMe()
+  if (xj.loggedIn)
+    xj.loadMe()
 })
 
 async function logout() {
@@ -41,23 +42,33 @@ async function logout() {
 </script>
 
 <template>
-  <view :class="[...xj.pageClass, 'has-tabbar']">
+  <view class="has-tabbar" :class="[...xj.pageClass]">
     <XNav />
-    <view v-if="!xj.me" class="card empty stack">
-      <text>登录后查看个人中心</text>
-      <view class="btn" @click="go('/pkg-auth/login')">登录 / 注册</view>
+    <view v-if="!xj.me" class="me-hero">
+      <image class="me-hero__img" :src="xj.themeMeta.img" mode="aspectFill" />
+      <view class="col me-hero__guest gap10">
+        <text class="t-lg">登录后查看个人中心</text>
+        <view class="btn" @click="go('/pkg-auth/login')">
+          登录 / 注册
+        </view>
+      </view>
     </view>
     <view v-else class="stack">
-      <view class="row gap12" @click="go('/pkg-auth/profile')">
-        <view class="avatar">{{ (xj.me.salutation || '客').slice(0, 1) }}</view>
-        <view class="col flex1">
-          <view class="row gap8">
-            <text class="t-xl">{{ xj.me.salutation || '未填写称呼' }}</text>
-            <text class="tag" :class="{ gold: xj.me.tier === 'A' }">{{ xj.me.tierName }}</text>
+      <view class="me-hero">
+        <image class="me-hero__img" :src="xj.themeMeta.img" mode="aspectFill" />
+        <view class="row me-hero__body gap12" @click="go('/pkg-auth/profile')">
+          <view class="avatar">
+            {{ (xj.me.salutation || '客').slice(0, 1) }}
           </view>
-          <text class="t-sm c2">{{ xj.me.store?.name || '' }}{{ xj.me.advisor ? `，顾问 ${xj.me.advisor.name}` : '' }}</text>
+          <view class="col flex1">
+            <view class="row gap8">
+              <text class="t-xl">{{ xj.me.salutation || '未填写称呼' }}</text>
+              <text class="tag" :class="{ gold: xj.me.tier === 'A' }">{{ xj.me.tierName }}</text>
+            </view>
+            <text class="t-sm c2">{{ xj.me.store?.name || '' }}{{ xj.me.advisor ? `，顾问 ${xj.me.advisor.name}` : '' }}</text>
+          </view>
+          <XIcon name="chevron-right" :size="20" color="#786E74" />
         </view>
-        <XIcon name="chevron-right" :size="20" color="#786E74" />
       </view>
 
       <view class="passbook row-between" @click="go('/pkg-points/passbook')">
@@ -69,12 +80,16 @@ async function logout() {
           </view>
           <text class="t-xs" style="opacity: 0.82">获得后 12 个月内有效</text>
         </view>
-        <view class="redeem">去兑换<XIcon name="chevron-right" :size="16" /></view>
+        <view class="redeem">
+          去兑换<XIcon name="chevron-right" :size="16" />
+        </view>
       </view>
 
       <view class="card raised quick">
-        <view v-for="q in quick" :key="q.name" class="col gap6 q" @click="go(q.link)">
-          <view class="icon-box" :class="q.name === '体检券' ? 'care' : ''"><XIcon :name="q.icon" /></view>
+        <view v-for="q in quick" :key="q.name" class="col q gap6" @click="go(q.link)">
+          <view class="icon-box" :class="q.name === '体检券' ? 'care' : ''">
+            <XIcon :name="q.icon" />
+          </view>
           <text class="t-sm">{{ q.name }}</text>
         </view>
       </view>
@@ -106,10 +121,90 @@ async function logout() {
 </template>
 
 <style scoped>
-.avatar { width: 56px; height: 56px; border-radius: 18px; background: linear-gradient(145deg, #fff8dc, #ffe58a); border: 1px solid var(--brand-line); color: var(--brand-ink); font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.passbook { position: relative; overflow: hidden; background: linear-gradient(135deg, #ffe04d 0%, #ffd100 48%, #f5be00 100%); color: var(--on-brand); border-radius: 20px; padding: 18px; box-shadow: 0 10px 24px -12px rgba(204, 150, 0, 0.55); }
-.passbook::after { content: ''; position: absolute; right: -28px; top: -36px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255, 255, 255, 0.18); pointer-events: none; }
-.redeem { display: flex; align-items: center; gap: 2px; height: 34px; padding: 0 12px 0 14px; border-radius: 999px; background: rgba(34, 34, 34, 0.86); color: #ffd100; font-size: var(--fs-sm); font-weight: 600; }
-.quick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.q { align-items: center; }
+/* 主题插画头图：随主题切换，文字叠在插画左侧留白区 */
+.me-hero {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 96px;
+  box-shadow: 0 10px 22px -14px rgba(34, 24, 40, 0.32);
+}
+.me-hero__img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.me-hero__body {
+  position: relative;
+  min-height: 96px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+.me-hero__guest {
+  position: relative;
+  min-height: 96px;
+  padding: 16px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.me-hero__guest .btn {
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 22px;
+  font-size: var(--fs-md);
+}
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, var(--brand-soft), var(--brand-line));
+  border: 1px solid var(--brand-line);
+  color: var(--brand-ink);
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.passbook {
+  position: relative;
+  overflow: hidden;
+  background: var(--brand-grad);
+  color: var(--on-brand);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 24px -12px rgba(204, 150, 0, 0.55);
+}
+.passbook::after {
+  content: '';
+  position: absolute;
+  right: -28px;
+  top: -36px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+.redeem {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 34px;
+  padding: 0 12px 0 14px;
+  border-radius: 999px;
+  background: rgba(34, 34, 34, 0.86);
+  color: var(--brand);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.quick {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.q {
+  align-items: center;
+}
 </style>

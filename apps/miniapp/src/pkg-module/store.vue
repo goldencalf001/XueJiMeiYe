@@ -140,7 +140,7 @@ function copyAddr() {
 </template>
 
 <style scoped>
-.hero { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 22px var(--pad) 44px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(120deg, #ffe14d 0%, #ffd100 55%, #ffc300 100%); color: var(--on-brand); }
+.hero { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 22px var(--pad) 44px; display: flex; align-items: center; justify-content: space-between; background: var(--brand-grad); color: var(--on-brand); }
 .hero-brand { font-size: var(--fs-xs); opacity: 0.75; letter-spacing: 1px; }
 .hero-name { font-size: var(--fs-xl); font-weight: 700; line-height: 1.3; }
 .hero-sub { font-size: var(--fs-sm); opacity: 0.8; }
